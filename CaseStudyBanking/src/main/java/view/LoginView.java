@@ -2,6 +2,7 @@ package view;
 
 import model.Information;
 import service.LoginService;
+import service.impl.LoginServiceImpl;
 import utils.Config;
 import utils.DateUtils;
 import utils.FileUtils;
@@ -11,10 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginView {
-    private LoginService loginService;
-    public LoginView(){
-        loginService = new LoginService();
+    private final LoginService loginService;
+
+    public LoginView(LoginService loginService) {
+        this.loginService=loginService;
     }
+
     public void MainView() {
         do {
             System.out.println("-----------------------------------------------------");
@@ -53,7 +56,7 @@ public class LoginView {
         Information inforUser = new Information(++Information.currentId, fullName, phoneNum, doB);
         List<Information> information = new ArrayList<>();
         information.add(inforUser);
-        LoginService.requestToAdmin();
+        LoginServiceImpl.requestToAdmin();
 
         FileUtils.writeFile(information, Config.PATH_FILE_INFORMATION);
     }

@@ -8,18 +8,12 @@ public class AppBanking {
     private AdminView adminView;
     private UserView userView;
 
-    public AppBanking(){
-        loginView = new LoginView();
-        adminView = new AdminView();
-        userView = new UserView();
+    public AppBanking(LoginView loginView, AdminView adminView, UserView userView) {
+        this.loginView = loginView;
+        this.adminView = adminView;
+        this.userView = userView;
     }
-
-    public static void main(String[] args) {
-        AppBanking appBanking = new AppBanking();
-        appBanking.run();
-    }
-
-    private void run() {
+    public void run() {
         loginView.MainView();
     }
 

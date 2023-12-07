@@ -67,6 +67,10 @@ public class Admin implements IParser{
         Admin.request = request;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s,%s,%s,%s,%s",id,username,password,fullName,request);
+    }
 
     @Override
     public void parse(String line) {

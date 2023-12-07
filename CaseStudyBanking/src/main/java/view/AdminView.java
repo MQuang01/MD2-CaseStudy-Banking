@@ -2,20 +2,23 @@ package view;
 
 
 import service.AdminService;
-import utils.Config;
-import utils.FileUtils;
+import service.impl.AdminServiceImpl;
 
 public class AdminView {
-    private AdminService adminService;
+    private final AdminService adminService;
 
-    public AdminView(){
-        adminService = new AdminService();
-        if (!FileUtils.checkFileExits(Config.PATH_FILE_ADMIN)) {
-            adminService.init();
-        }else{
-            adminService.setCurrentId();
-        }
+    public AdminView(AdminService adminService) {
+        this.adminService = adminService;
     }
+
+//    public AdminView(){
+//        adminService = new AdminService();
+//        if (!FileUtils.checkFileExits(Config.PATH_FILE_ADMIN)) {
+//            adminService.init();
+//        }else{
+//            adminService.setCurrentId();
+//        }
+//    }
     public void chooseAdminActive(){
         do {
             System.out.println("-----------------------------------------------------------------------------");
