@@ -1,0 +1,7 @@
+Account
+id,username,psw,fullName,doB,ranked
+1,0934960651,123123,Minh Quang,2000-11-21,1.
+
+Admin
+id,username,psw,fullName,request
+1,admin,123,Minh Quang,5
