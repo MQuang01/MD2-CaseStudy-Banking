@@ -11,7 +11,7 @@ public class Information {
     private Admin approved_by;
     private Admin cancel_by;
 
-    public static int currentId;
+    public static long currentId;
 
     public Information() {
     }

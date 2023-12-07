@@ -1,7 +1,7 @@
 package view;
 
 public class UserView {
-    public void chooseActive(){
+    public void chooseUserActive(){
         do {
             System.out.println("------------------------------------------------------------------------");
             System.out.printf("%-20s %-30s %20s\n", "|", "1. Nạp tiền", "|");

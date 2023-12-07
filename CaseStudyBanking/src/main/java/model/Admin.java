@@ -6,17 +6,25 @@ public class Admin implements IParser{
     private String password;
     private String fullName;
     public static int request;
+    public static long currentId;
 
     public Admin() {
-        username = "admin";
-        password = "123";
     }
 
-    public Admin(long id, String username, String password, String fullName) {
+    public Admin(long id, String username, String fullName) {
         this.id = id;
         this.username = username;
-        this.password = password;
+        this.password = "123";
         this.fullName = fullName;
+        request = 0;
+    }
+
+    public Admin(String username, String fullName) {
+        this.username = username;
+        this.password = "123";
+        this.fullName = fullName;
+        request = 0;
+
     }
 
     public long getId() {

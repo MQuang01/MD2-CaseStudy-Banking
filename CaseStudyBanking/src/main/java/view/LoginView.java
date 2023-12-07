@@ -12,6 +12,9 @@ import java.util.List;
 
 public class LoginView {
     private LoginService loginService;
+    public LoginView(){
+        loginService = new LoginService();
+    }
     public void MainView() {
         do {
             System.out.println("-----------------------------------------------------");
@@ -38,6 +41,7 @@ public class LoginView {
     public void logIn() {
         String username = InputUtils.getString("Nhập tài khoản: ");
         String password = InputUtils.getString("Nhập mật khẩu: ");
+
         loginService.checkLogin(username, password);
     }
 
