@@ -16,7 +16,6 @@ public class AppBanking {
         this.userView = userView;
     }
 
-
     public void run() {
         loginView.MainView(this);
     }

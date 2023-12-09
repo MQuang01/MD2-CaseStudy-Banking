@@ -1,11 +1,13 @@
 package casestudy.model;
 
+import casestudy.utils.DateUtils;
+
 import java.time.LocalDate;
 
-public class Information {
+public class Information implements IParser{
     private long id;
     private String fullName;
-    private String phoneNUm;
+    private String phoneNum;
     private LocalDate doB;
     private boolean status;
     private Admin approved_by;
@@ -19,14 +21,14 @@ public class Information {
     public Information(long id, String fullName, String phoneNUm, LocalDate doB) {
         this.id = id;
         this.fullName = fullName;
-        this.phoneNUm = phoneNUm;
+        this.phoneNum = phoneNUm;
         this.doB = doB;
         this.status = false;
     }
 
     public Information(String fullName, String phoneNUm, LocalDate doB) {
         this.fullName = fullName;
-        this.phoneNUm = phoneNUm;
+        this.phoneNum = phoneNUm;
         this.doB = doB;
         this.status = false;
     }
@@ -47,12 +49,12 @@ public class Information {
         this.fullName = fullName;
     }
 
-    public String getPhoneNUm() {
-        return phoneNUm;
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setPhoneNUm(String phoneNUm) {
-        this.phoneNUm = phoneNUm;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public LocalDate getDoB() {
@@ -90,6 +92,16 @@ public class Information {
     //id,fullName,phone,doB,null,null
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s", id, fullName, phoneNUm, doB);
+        return String.format("%s,%s,%s,%s", id, fullName, phoneNum, doB);
+    }
+
+    public void parse(String line) {
+        String [] items = line.split(",");
+
+        //1,Minh Quang 1,0934960651,2000-11-21
+        this.id = Long.parseLong(items[0]);
+        this.fullName = items[1];
+        this.phoneNum = items[2];
+        this.doB = DateUtils.parse(items[3]);
     }
 }

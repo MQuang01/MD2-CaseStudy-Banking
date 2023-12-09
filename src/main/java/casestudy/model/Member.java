@@ -4,35 +4,39 @@ import casestudy.utils.DateUtils;
 
 import java.time.LocalDate;
 
-public class Account implements IParser{
+public class Member implements IParser{
     private long id;
     private String username;
     private String password;
     private String fullName;
     private String phoneNum;
     private LocalDate doB;
+    private long balance;
     private ERank eRank;
     public static long currentId;
 
-    public Account() {
+
+    public Member() {
     }
 
-    public Account(long id, String fullName, String phoneNum, LocalDate doB, ERank eRank) {
+    public Member(long id, String fullName, String phoneNum, LocalDate doB, long balance, ERank eRank) {
         this.id = id;
         this.username = String.valueOf(phoneNum);
         this.password = "123123";
         this.fullName = fullName;
         this.phoneNum = phoneNum;
         this.doB = doB;
+        this.balance = balance;
         this.eRank = eRank;
     }
 
-    public Account(String fullName, String phoneNum, LocalDate doB, ERank eRank) {
+    public Member(String fullName, String phoneNum, LocalDate doB,long balance, ERank eRank) {
         this.fullName = fullName;
         this.username = String.valueOf(phoneNum);
         this.password = "123123";
         this.phoneNum = phoneNum;
         this.doB = doB;
+        this.balance = balance;
         this.eRank = eRank;
     }
 
@@ -84,6 +88,14 @@ public class Account implements IParser{
         this.doB = doB;
     }
 
+    public long getBalance() {
+        return balance;
+    }
+
+    public void setBalance(long balance) {
+        this.balance = balance;
+    }
+
     public ERank geteRank() {
         return eRank;
     }
@@ -94,20 +106,21 @@ public class Account implements IParser{
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s", id,username,password,phoneNum,fullName,doB,eRank);
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s", id,username,password,phoneNum,fullName,doB,balance,eRank);
     }
 
     @Override
     public void parse(String line) {
         String [] items = line.split(",");
 
-        //id,username,psw,fullName,doB,ranked
+        //id,username,psw,fullName,phoneNum,doB,blance,ranked
         this.id = Long.parseLong(items[0]);
         this.username = items[1];
         this.password = items[2];
         this.phoneNum = items[3];
         this.fullName = items[4];
         this.doB = DateUtils.parse(items[5]);
-        this.eRank = ERank.valueOf(items[6]);
+        this.balance = Long.parseLong(items[6]);
+        this.eRank = ERank.valueOf(items[7]);
     }
 }

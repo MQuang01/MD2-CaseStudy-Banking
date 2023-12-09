@@ -14,12 +14,12 @@ public class Main {
     public static void main(String[] args) {
         AdminService adminService= new AdminServiceImpl();
         UserService userService= new UserServiceImpl();
-        LoginService loginService= new LoginServiceImpl();
 
-
-        LoginView loginView = new LoginView(loginService);
         AdminView adminView = new AdminView(adminService);
-        UserView userView= new UserView();
+        LoginService loginService= new LoginServiceImpl();
+        LoginView loginView = new LoginView(loginService);
+
+        UserView userView= new UserView(userService);
 
 
         AppBanking appBanking = new AppBanking(loginView,adminView,userView);

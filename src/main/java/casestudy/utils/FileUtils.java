@@ -16,7 +16,7 @@ public class FileUtils {
                 bufferedWriter.write(e + "\n");
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }finally {
             try {
                 if (bufferedWriter != null) {
@@ -41,9 +41,8 @@ public class FileUtils {
 
             String line = null;
             while ((line = bufferedReader.readLine()) != null) {
-                // PRODUCT line: 1,Iphone 11, Iphone 11 64GB RED,1000000,1,APPLE,2023-10-09
 //                T obj = new T();                      // không thể tạo đối tượng từ gerneric T
-                Object obj = clazz.newInstance();           // User u = new User(), Product p = new Product();
+                Object obj = clazz.newInstance();
                 IParser iParser = (IParser) obj;
                 iParser.parse(line);
 

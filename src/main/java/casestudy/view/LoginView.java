@@ -16,6 +16,7 @@ public class LoginView {
     private final LoginService loginService;
 
     public LoginView(LoginService loginService) {
+        loginService = new LoginServiceImpl();
         this.loginService = loginService;
 
         if (!FileUtils.checkFileExits(Config.PATH_FILE_INFORMATION)){
@@ -23,15 +24,17 @@ public class LoginView {
         }else{
             loginService.setCurrentIdInfor();
         }
+
         if (!FileUtils.checkFileExits(Config.PATH_FILE_ADMIN)){
             loginService.initAdmin();
         }else{
             loginService.setCurrentIdAdmin();
         }
-        if (!FileUtils.checkFileExits(Config.PATH_FILE_ACCOUNT)){
-            loginService.initAccount();
+
+        if (!FileUtils.checkFileExits(Config.PATH_FILE_MEMBER)){
+            loginService.initMember();
         }else{
-            loginService.setCurrentIdAccount();
+            loginService.setCurrentIdMember();
         }
     }
 

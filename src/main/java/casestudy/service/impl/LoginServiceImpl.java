@@ -1,6 +1,6 @@
 package casestudy.service.impl;
 
-import casestudy.model.Account;
+import casestudy.model.Member;
 import casestudy.model.Admin;
 import casestudy.model.ERank;
 import casestudy.model.Information;
@@ -8,18 +8,23 @@ import casestudy.service.LoginService;
 import casestudy.utils.Config;
 import casestudy.utils.DateUtils;
 import casestudy.utils.FileUtils;
-import casestudy.view.AdminView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginServiceImpl extends BaseService implements LoginService {
+//    private AdminView adminView;
+//
+//    public LoginServiceImpl(AdminView adminView){
+//        this.adminView = adminView;
+//    }
 
     @Override
     public void initInfor() {
         List<Information> inforList = new ArrayList<>();
 
         inforList.add(new Information(++Information.currentId, "Minh Quang 1", "0934960651", DateUtils.parse("2000-11-21")));
+        inforList.add(new Information(++Information.currentId, "Minh Quang 2", "0771231232", DateUtils.parse("1898-05-11")));
 
         FileUtils.writeFile(inforList, Config.PATH_FILE_INFORMATION);
     }
@@ -43,31 +48,23 @@ public class LoginServiceImpl extends BaseService implements LoginService {
         adminList.sort((o1, o2) -> Long.compare(o1.getId(), o2.getId()));
         Admin.currentId = adminList.get(adminList.size() - 1).getId();
     }
-    public void initAccount() {
-        List<Account> accounts = new ArrayList<>();
+    public void initMember() {
+        List<Member> members = new ArrayList<>();
 
-        accounts.add(new Account(++Account.currentId, "Quoc Anh", "0772717214", DateUtils.parse("2000-05-21"), ERank.NORMAL));
-        accounts.add(new Account(++Account.currentId, "Quoc Phu", "0795648524", DateUtils.parse("1995-06-14"), ERank.NORMAL));
+        members.add(new Member(++Member.currentId, "Quoc Anh", "0772717214", DateUtils.parse("2000-05-21"),500000, ERank.NORMAL));
+        members.add(new Member(++Member.currentId, "Quoc Phu", "0795648524", DateUtils.parse("1995-06-14"),300000, ERank.NORMAL));
 
-        FileUtils.writeFile(accounts, Config.PATH_FILE_ACCOUNT);
+        FileUtils.writeFile(members, Config.PATH_FILE_MEMBER);
     }
-    public void setCurrentIdAccount() {
-        List<Account> accounts = getAllAccount();
+    public void setCurrentIdMember() {
+        List<Member> members = getAllMember();
 
-        accounts.sort((o1, o2) -> Long.compare(o1.getId(), o2.getId()));
-        Account.currentId = accounts.get(accounts.size() - 1).getId();
+        members.sort((o1, o2) -> Long.compare(o1.getId(), o2.getId()));
+        Member.currentId = members.get(members.size() - 1).getId();
     }
 
 
-    public List<Information> getAllInfor() {
-        return FileUtils.readFile(Config.PATH_FILE_INFORMATION, Information.class);
-    }
-    public List<Account> getAllAccount() {
-        return FileUtils.readFile(Config.PATH_FILE_ACCOUNT, Account.class);
-    }
-    public List<Admin> getAllAdmin() {
-        return FileUtils.readFile(Config.PATH_FILE_ADMIN, Admin.class);
-    }
+
 
 
 
@@ -80,24 +77,21 @@ public class LoginServiceImpl extends BaseService implements LoginService {
             List<Admin> adminList = getAllAdmin();
             for (Admin ad : adminList) {
                 if (ad.getUsername().equals(username) && ad.getPassword().equals(psw)) {
-
-                } else {
-
+                    callAdminView();
                 }
             }
+            callLogInView();
         } else {
-            List<Account> accountList = getAllAccount();
-            for (Account acc : accountList) {
-                if (acc.getUsername().equals(username) && acc.getPassword().equals(psw)) {
+            List<Member> memberList = getAllMember();
+            for (Member member : memberList) {
+                if (member.getUsername().equals(username) && member.getPassword().equals(psw)) {
                     System.out.println("Đăng nhập thành công");
-                    System.out.println("Xin chào" + acc.getFullName());
-                    // UserService làm gì đó
-                    return;
-                } else {
-                    System.out.println("Sai thông tin đăng nhập");
-                    return;
+                    System.out.println("Xin chào " + member.getFullName());
+                    callUserView(member);
                 }
             }
+            System.out.println("Sai thông tin đăng nhập");
+            callLogInView();
         }
     }
 
