@@ -8,16 +8,13 @@ import casestudy.service.LoginService;
 import casestudy.utils.Config;
 import casestudy.utils.DateUtils;
 import casestudy.utils.FileUtils;
+import casestudy.utils.InputUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginServiceImpl extends BaseService implements LoginService {
-//    private AdminView adminView;
-//
-//    public LoginServiceImpl(AdminView adminView){
-//        this.adminView = adminView;
-//    }
 
     @Override
     public void initInfor() {
@@ -37,8 +34,8 @@ public class LoginServiceImpl extends BaseService implements LoginService {
     public void initAdmin() {
         List<Admin> adminList = new ArrayList<>();
 
-        adminList.add(new Admin(++Admin.currentId, "admin", "Minh Quang"));
-        adminList.add(new Admin(++Admin.currentId, "admin1", "Quang Minh"));
+        adminList.add(new Admin(++Admin.currentId, "admin", "Minh Quang", Admin.getRequest()));
+        adminList.add(new Admin(++Admin.currentId, "admin1", "Quang Minh", Admin.getRequest()));
 
         FileUtils.writeFile(adminList, Config.PATH_FILE_ADMIN);
     }
@@ -47,6 +44,9 @@ public class LoginServiceImpl extends BaseService implements LoginService {
 
         adminList.sort((o1, o2) -> Long.compare(o1.getId(), o2.getId()));
         Admin.currentId = adminList.get(adminList.size() - 1).getId();
+    }
+    public void setRequestAdmin(){
+        Admin.request = 3;
     }
     public void initMember() {
         List<Member> members = new ArrayList<>();
@@ -64,10 +64,6 @@ public class LoginServiceImpl extends BaseService implements LoginService {
     }
 
 
-
-
-
-
     public static void requestToAdmin() {
         Admin.setRequest(++Admin.request);
     }
@@ -77,9 +73,12 @@ public class LoginServiceImpl extends BaseService implements LoginService {
             List<Admin> adminList = getAllAdmin();
             for (Admin ad : adminList) {
                 if (ad.getUsername().equals(username) && ad.getPassword().equals(psw)) {
-                    callAdminView();
+                    System.out.println("Đăng nhập thành công");
+                    System.out.println("Xin chào " + ad.getFullName());
+                    callAdminView(ad);
                 }
             }
+            System.err.println("Sai thông tin đăng nhập");
             callLogInView();
         } else {
             List<Member> memberList = getAllMember();
@@ -95,5 +94,28 @@ public class LoginServiceImpl extends BaseService implements LoginService {
         }
     }
 
+    @Override
+    public void inputInforSignIn() {
+        String fullName = InputUtils.getString("Nhập họ và tên: ");
+        String phoneNum = InputUtils.getPhoneNumber("Mời nhập số điện thoại: ");
+        LocalDate doB = DateUtils.parse(InputUtils.getString("Nhập ngày sinh nhật: "));
 
+        List<Information> information = getAllInfor();
+        List<Member> members = getAllMember();
+
+        for (Member member : members){
+            if(member.getUsername().equals(phoneNum)){
+                System.err.println("Số điện thoại đã được đăng ký tài khoản");
+                return;
+            }
+        }
+
+        Information inforUser = new Information(++Information.currentId, fullName, phoneNum, doB);
+
+        information.add(inforUser);
+        requestToAdmin();
+
+        FileUtils.writeFile(information, Config.PATH_FILE_INFORMATION);
+        System.out.println("Gửi thông tin thành công\nKiểm tra điện thoại để nhận tài khoản và mật khẩu");
+    }
 }

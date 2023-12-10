@@ -5,40 +5,40 @@ import casestudy.model.Information;
 import casestudy.model.Member;
 import casestudy.service.AdminService;
 import casestudy.service.LoginService;
-import casestudy.service.UserService;
+import casestudy.service.MemberService;
 import casestudy.utils.Config;
 import casestudy.utils.FileUtils;
 import casestudy.view.AdminView;
 import casestudy.view.LoginView;
-import casestudy.view.UserView;
+import casestudy.view.MemberView;
 
 import java.util.List;
 
 public class BaseService {
     private AdminView adminView;
     private LoginView loginView;
-    private UserView userView;
+    private MemberView memberView;
     private AdminService adminService;
     private LoginService loginService;
-    private UserService userService;
+    private MemberService memberService;
 
 
     public BaseService() {
     }
 
-    public BaseService(AdminView adminView, LoginView loginView, UserView userView,
-                       AdminService adminService, LoginService loginService, UserService userService) {
+    public BaseService(AdminView adminView, LoginView loginView, MemberView memberView,
+                       AdminService adminService, LoginService loginService, MemberService memberService) {
         this.adminView = adminView;
         this.loginView = loginView;
-        this.userView = userView;
+        this.memberView = memberView;
         this.adminService = adminService;
         this.loginService = loginService;
-        this.userService = userService;
+        this.memberService = memberService;
     }
 
-    public void callAdminView(){
+    public void callAdminView(Admin admin){
         adminView = new AdminView(adminService);
-        adminView.chooseAdminActive();
+        adminView.chooseAdminActive(admin);
     }
 
     public void callLogInView(){
@@ -47,8 +47,8 @@ public class BaseService {
     }
 
     public void callUserView(Member member){
-        userView = new UserView(userService);
-        userView.chooseUserActive(member);
+        memberView = new MemberView(memberService);
+        memberView.chooseUserActive(member);
     }
 
     public List<Information> getAllInfor() {
@@ -78,12 +78,12 @@ public class BaseService {
         this.loginService = loginService;
     }
 
-    public UserService getUserService() {
-        return userService;
+    public MemberService getUserService() {
+        return memberService;
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setUserService(MemberService memberService) {
+        this.memberService = memberService;
     }
 
 
@@ -103,11 +103,11 @@ public class BaseService {
         this.loginView = loginView;
     }
 
-    public UserView getUserView() {
-        return userView;
+    public MemberView getUserView() {
+        return memberView;
     }
 
-    public void setUserView(UserView userView) {
-        this.userView = userView;
+    public void setUserView(MemberView memberView) {
+        this.memberView = memberView;
     }
 }

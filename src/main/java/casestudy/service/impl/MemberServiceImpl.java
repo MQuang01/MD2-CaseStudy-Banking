@@ -1,15 +1,14 @@
 package casestudy.service.impl;
 
 import casestudy.model.Member;
-import casestudy.service.UserService;
+import casestudy.service.MemberService;
 import casestudy.utils.Config;
 import casestudy.utils.FileUtils;
 import casestudy.utils.InputUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class UserServiceImpl extends BaseService implements UserService {
+public class MemberServiceImpl extends BaseService implements MemberService {
     @Override
     public void addMoney(Member member) {
         long money = InputUtils.getNumber("Nhập số tiền muốn nạp: ");
@@ -23,7 +22,6 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 
                 FileUtils.writeFile(members, Config.PATH_FILE_MEMBER);
-
                 return;
             }
         }
@@ -82,11 +80,15 @@ public class UserServiceImpl extends BaseService implements UserService {
         long money = InputUtils.getNumber("Nhập số tiền cần rút: ");
         for (Member m : members){
             if(m.getBalance() < money){
-                System.out.println("Số dư tài khoản không đủ");
+                System.err.println("Số dư tài khoản không đủ");
                 callUserView(member);
             }else {
                 m.setBalance(m.getBalance() - money);
+                member.setBalance(member.getBalance() - money);
                 System.out.println("Rút tiền thành công");
+
+                FileUtils.writeFile(members, Config.PATH_FILE_MEMBER);
+                return;
             }
         }
         System.err.println("Rút tiền không thành công");

@@ -8,4 +8,12 @@ public class ValidateUtils {
     public static boolean isValidPhoneNumber(String strNumber){
         return Pattern.matches(PHONE_NUMBER_REGEX, strNumber);
     }
+
+    public static void checkStatusReq(String item){
+        if(true){
+            System.out.println("APPROVE");
+        }else {
+            System.out.println("PENDING");
+        }
+    }
 }

@@ -2,7 +2,7 @@ package casestudy.service;
 
 import casestudy.model.Member;
 
-public interface UserService {
+public interface MemberService {
     void addMoney(Member member);
 
     void getInforMember(Member member);

@@ -30,7 +30,7 @@ public class Member implements IParser{
         this.eRank = eRank;
     }
 
-    public Member(String fullName, String phoneNum, LocalDate doB,long balance, ERank eRank) {
+    public Member(String fullName, String phoneNum, LocalDate doB, long balance, ERank eRank) {
         this.fullName = fullName;
         this.username = String.valueOf(phoneNum);
         this.password = "123123";

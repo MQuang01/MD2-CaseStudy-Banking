@@ -1,16 +1,15 @@
 package casestudy.view;
 
 import casestudy.model.Member;
-import casestudy.service.AdminService;
-import casestudy.service.UserService;
-import casestudy.service.impl.UserServiceImpl;
+import casestudy.service.MemberService;
+import casestudy.service.impl.MemberServiceImpl;
 import casestudy.utils.InputUtils;
 
-public class UserView {
-    private UserService userService;
+public class MemberView {
+    private MemberService memberService;
 
-    public UserView(UserService userService) {
-        this.userService = userService;
+    public MemberView(MemberService memberService) {
+        this.memberService = memberService;
     }
 
     public void chooseUserActive(Member member){
@@ -52,12 +51,12 @@ public class UserView {
     }
 
     private void logOut() {
-        userService = new UserServiceImpl();
-        userService.logOut();
+        memberService = new MemberServiceImpl();
+        memberService.logOut();
     }
 
     private void registerBankPassBook(Member member) {
-        userService = new UserServiceImpl();
+        memberService = new MemberServiceImpl();
 
         long money = Long.parseLong(InputUtils.getString("Nhập số tiền bạn muốn gửi: "));
         System.out.printf("Với %s này.\nBạn sẽ nhận được %s đồng sau 6 tháng.\n", money, Double.parseDouble(String.valueOf(Math.round((money * Math.pow(1 + 0.044 / 1, 1 * 6)) * 100 / 100))));
@@ -78,21 +77,23 @@ public class UserView {
     }
 
     private void withdrawnFromCard(Member member) {
-        userService = new UserServiceImpl();
-        userService.getMoney(member);
+        memberService = new MemberServiceImpl();
+        memberService.getMoney(member);
+        showBalance(member);
     }
 
     private void transferMoney(Member member) {
-        userService = new UserServiceImpl();
-        userService.transferTo(member);
+        memberService = new MemberServiceImpl();
+        memberService.transferTo(member);
     }
 
     private void depositToCard(Member member) {
-        userService = new UserServiceImpl();
-        userService.addMoney(member);
+        memberService = new MemberServiceImpl();
+        memberService.addMoney(member);
+        showBalance(member);
     }
     private void showBalance(Member member) {
-        userService = new UserServiceImpl();
-        userService.getInforMember(member);
+        memberService = new MemberServiceImpl();
+        memberService.getInforMember(member);
     }
 }

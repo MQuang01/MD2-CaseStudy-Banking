@@ -1,8 +1,12 @@
 package casestudy.model;
 
+import casestudy.service.LoginService;
+import casestudy.service.impl.BaseService;
 import casestudy.utils.DateUtils;
+import casestudy.utils.ValidateUtils;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Information implements IParser{
     private long id;
@@ -11,7 +15,6 @@ public class Information implements IParser{
     private LocalDate doB;
     private boolean status;
     private Admin approved_by;
-    private Admin cancel_by;
 
     public static long currentId;
 
@@ -24,6 +27,7 @@ public class Information implements IParser{
         this.phoneNum = phoneNUm;
         this.doB = doB;
         this.status = false;
+        this.approved_by = null;
     }
 
     public Information(String fullName, String phoneNUm, LocalDate doB) {
@@ -31,6 +35,7 @@ public class Information implements IParser{
         this.phoneNum = phoneNUm;
         this.doB = doB;
         this.status = false;
+        this.approved_by = null;
     }
 
     public long getId() {
@@ -81,27 +86,29 @@ public class Information implements IParser{
         this.approved_by = approved_by;
     }
 
-    public Admin getCancel_by() {
-        return cancel_by;
-    }
 
-    public void setCancel_by(Admin cancel_by) {
-        this.cancel_by = cancel_by;
-    }
 
     //id,fullName,phone,doB,null,null
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s", id, fullName, phoneNum, doB);
+        return String.format("%s,%s,%s,%s,%s,%s", id, fullName, phoneNum, doB, status, approved_by);
     }
 
     public void parse(String line) {
         String [] items = line.split(",");
 
-        //1,Minh Quang 1,0934960651,2000-11-21
+        //1,Minh Quang 1,0934960651,2000-11-21,false,approve_by,cancel_by
         this.id = Long.parseLong(items[0]);
         this.fullName = items[1];
         this.phoneNum = items[2];
         this.doB = DateUtils.parse(items[3]);
+        this.status = Boolean.parseBoolean(items[4]);
+
+        if (!items[5].equals("null")){
+            this.approved_by = new Admin(Long.parseLong(items[5]));
+        }else {
+            this.approved_by = null;
+        }
+
     }
 }

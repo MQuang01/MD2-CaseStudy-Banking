@@ -2,18 +2,18 @@ package casestudy;
 
 import casestudy.view.AdminView;
 import casestudy.view.LoginView;
-import casestudy.view.UserView;
+import casestudy.view.MemberView;
 
 public class AppBanking {
     private LoginView loginView;
     private AdminView adminView;
-    private UserView userView;
+    private MemberView memberView;
 
 
-    public AppBanking(LoginView loginView, AdminView adminView, UserView userView) {
+    public AppBanking(LoginView loginView, AdminView adminView, MemberView memberView) {
         this.loginView = loginView;
         this.adminView = adminView;
-        this.userView = userView;
+        this.memberView = memberView;
     }
 
     public void run() {
@@ -38,11 +38,11 @@ public class AppBanking {
         this.adminView = adminView;
     }
 
-    public UserView getUserView() {
-        return userView;
+    public MemberView getUserView() {
+        return memberView;
     }
 
-    public void setUserView(UserView userView) {
-        this.userView = userView;
+    public void setUserView(MemberView memberView) {
+        this.memberView = memberView;
     }
 }

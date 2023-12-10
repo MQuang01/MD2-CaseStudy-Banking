@@ -16,4 +16,6 @@ public interface LoginService {
 
 
      void checkLogin(String username, String psw);
+
+    void inputInforSignIn();
 }

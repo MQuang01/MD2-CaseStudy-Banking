@@ -70,15 +70,6 @@ public class LoginView {
     }
 
     private void signIn() {
-        String fullName = InputUtils.getString("Nhập họ và tên: ");
-        String phoneNum = InputUtils.getPhoneNumber("Mời nhập số điện thoại: ");
-        LocalDate doB = DateUtils.parse(InputUtils.getString("Nhập ngày sinh nhật: "));
-
-        Information inforUser = new Information(++Information.currentId, fullName, phoneNum, doB);
-        List<Information> information = new ArrayList<>();
-        information.add(inforUser);
-        LoginServiceImpl.requestToAdmin();
-
-        FileUtils.writeFile(information, Config.PATH_FILE_INFORMATION);
+        loginService.inputInforSignIn();
     }
 }
